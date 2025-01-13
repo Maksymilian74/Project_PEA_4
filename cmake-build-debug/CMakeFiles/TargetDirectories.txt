@@ -1,3 +1,0 @@
-C:/Users/szewc/CLionProjects/Projekt_PEA_4/cmake-build-debug/CMakeFiles/Projekt_PEA_4.dir
-C:/Users/szewc/CLionProjects/Projekt_PEA_4/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/szewc/CLionProjects/Projekt_PEA_4/cmake-build-debug/CMakeFiles/rebuild_cache.dir

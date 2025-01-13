@@ -1,0 +1,28 @@
+# Plik konfiguracyjny programu
+
+# Nazwa pliku wejsciowego(ftv47.atsp, ftv170.atsp, rbg403.atsp)
+input_file=ftv47.atsp
+# Czy wyswietlic macierz (0 - nie, 1 - tak)
+display_matrix=0
+# Liczba iteracji
+iterations=10
+# Uruchomienie algorytmu Genetic Algorithm
+run_GA=1
+# Nazwa pliku wyjsciowego
+output_file=result.csv
+# Wlaczenie paska postepu (0 - nie, 1 - tak)
+progress=0
+# Wyswietlanie wynikow algorytmu (0 - nie, 1 - tak)
+show_results=0
+# Kryterium stopu
+stop_criterion=10
+# Wielkosc populacji
+population_size=5
+# Wspolczynnik krzyzowania
+crossover_factor=0.8
+# Wspolczynnik mutacji
+mutation_factor=0.01
+# Metoda krzyzowania (PMX, OX)
+crossover_method=PMX
+# Metoda mutacji (swap, insert)
+mutation_method=insert
