@@ -57,7 +57,7 @@ void Menu::run() {
         int minCost = 0;
 
         if (runGA) {
-            int minCost = algorithms.GeneticAlgorithm(*matrix, bestPath, populationSize, stopCriterion, crossoverFactor, mutationFactor, crossoverMethod, mutationMethod);
+            minCost = algorithms.GeneticAlgorithm(*matrix, bestPath, populationSize, stopCriterion, crossoverFactor, mutationFactor, crossoverMethod, mutationMethod);
             cout << "Najlepszy znaleziony koszt: " << minCost << endl;
 
             // Zapis pojedynczych wynikow do pliku CSV
