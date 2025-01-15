@@ -16,7 +16,7 @@ using namespace std;
 class Algorithms {
 public:
     // Metoda Genetic Algorithm
-    int GeneticAlgorithm(const Matrix& matrix, vector<int>& bestPath, int populationSize, int stopCriterion, double crossoverFactor, double mutationFactor, string crossoverMethod, string mutationMethod);
+    int GeneticAlgorithm(const Matrix& matrix, vector<int>& bestPath, int populationSize, int stopCriterion, double crossoverFactor, double mutationFactor, string crossoverMethod, string mutationMethod, double& bestPathTime);
 private:
     // Metoda pomocnicza odpowiedzialna za obliczanie kosztu sciezki
     static int computePathCost(const Matrix& matrix, const std::vector<int>& path);

@@ -55,13 +55,15 @@ void Menu::run() {
         }
         vector<int> bestPath;
         int minCost = 0;
+        double bestPathTime = 0;
 
         if (runGA) {
-            minCost = algorithms.GeneticAlgorithm(*matrix, bestPath, populationSize, stopCriterion, crossoverFactor, mutationFactor, crossoverMethod, mutationMethod);
+            minCost = algorithms.GeneticAlgorithm(*matrix, bestPath, populationSize, stopCriterion, crossoverFactor, mutationFactor, crossoverMethod, mutationMethod, bestPathTime);
             cout << "Najlepszy znaleziony koszt: " << minCost << endl;
+            cout  << "Czas znalezienia najlepszego wyniku: " << bestPathTime << " s" << endl;
 
             // Zapis pojedynczych wynikow do pliku CSV
-            saveResultsToCSV("SimulatedAnnealing",matrix->getSize(), minCost);
+            saveResultsToCSV("SimulatedAnnealing",matrix->getSize(), minCost, bestPathTime);
         }
 
         if (showResults) {
@@ -159,14 +161,14 @@ string Menu::extractValue(const string& line) {
 }
 
 // Metoda odpowiedzialna za zapis wyników do pliku CSV
-void Menu::saveResultsToCSV(const string& algorithm, int size, int cost) {
+void Menu::saveResultsToCSV(const string& algorithm, int size, int cost, double time) {
     ofstream file(outputFile, ios::app);  // Otwieranie pliku w trybie dopisywania
     if (!file.is_open()) {
         cerr << "Blad: Nie mozna otworzyc pliku wyjsciowego: " << outputFile << endl;
         return;
     }
 
-    file << algorithm << "," << size << "," << cost << "\n";
+    file << algorithm << "," << size << "," << cost << "," << time << "\n";
 
     file.close();
 }

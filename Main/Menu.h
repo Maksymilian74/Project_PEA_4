@@ -35,7 +35,7 @@ private:
     string crossoverMethod; // Zmienna przechowujaca informacje o metodzie krzyzowania
 
     string extractValue(const string& line); // Pomocnicza metoda do wyciagania wartosci po "="
-    void saveResultsToCSV(const string& algorithm, int size, int cost);  // Pomocnicza metoda odpowiedzialna za zapis pomiarow do pliku
+    void saveResultsToCSV(const string& algorithm, int size, int cost, double time);  // Pomocnicza metoda odpowiedzialna za zapis pomiarow do pliku
 };
 
 #endif

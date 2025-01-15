@@ -10,7 +10,7 @@ using namespace std;
 using namespace std::chrono;
 
 // Metoda Genetic Algorithm
-int Algorithms::GeneticAlgorithm(const Matrix& matrix, vector<int>& bestPath, int populationSize, int stopCriterion, double crossoverFactor, double mutationFactor, string crossoverMethod, string mutationMethod) {
+int Algorithms::GeneticAlgorithm(const Matrix& matrix, vector<int>& bestPath, int populationSize, int stopCriterion, double crossoverFactor, double mutationFactor, string crossoverMethod, string mutationMethod, double& bestPathTime) {
 
         srand(time(nullptr));
 
@@ -45,16 +45,16 @@ int Algorithms::GeneticAlgorithm(const Matrix& matrix, vector<int>& bestPath, in
             vector<int> newFitness(populationSize);
 
             for (int i = 0; i < populationSize; i++) {
-                int parent1Idx = tournamentSelection(population, fitness);
-                int parent2Idx = tournamentSelection(population, fitness);
+                int parent1 = tournamentSelection(population, fitness);
+                int parent2 = tournamentSelection(population, fitness);
 
                 double r = static_cast<double>(rand()) / RAND_MAX;
-                vector<int> offspring = population[parent1Idx];
+                vector<int> offspring = population[parent1];
                 if (r < crossoverFactor) {
                     if (crossoverMethod == "PMX") {
-                        offspring = pmxCrossover(population[parent1Idx], population[parent2Idx]);
+                        offspring = pmxCrossover(population[parent1], population[parent2]);
                     } else if (crossoverMethod == "OX") {
-                        offspring = oxCrossover(population[parent1Idx], population[parent2Idx]);
+                        offspring = oxCrossover(population[parent1], population[parent2]);
                     }
                 }
 
@@ -78,6 +78,10 @@ int Algorithms::GeneticAlgorithm(const Matrix& matrix, vector<int>& bestPath, in
                 if (newFitness[i] < bestCost) {
                     bestCost = newFitness[i];
                     bestPath = newPopulation[i];
+
+                    auto best = high_resolution_clock::now();
+                    double elapsedBest = duration_cast<milliseconds>(best - start).count() / 1000.0;
+                    bestPathTime = elapsedBest;
                 }
             }
 
@@ -88,6 +92,7 @@ int Algorithms::GeneticAlgorithm(const Matrix& matrix, vector<int>& bestPath, in
         return bestCost;
     }
 
+// Metoda pomocnicza odpowiedzialna za obliczanie kosztu sciezki
 int Algorithms::computePathCost(const Matrix& matrix, const vector<int>& path) {
     int totalCost = 0;
     int size = path.size();
@@ -99,6 +104,7 @@ int Algorithms::computePathCost(const Matrix& matrix, const vector<int>& path) {
     return totalCost;
 }
 
+// Metoda pomocnicza odpowiedzialna za generowanie losowych sciezek
 std::vector<int> Algorithms::generateRandomPath(int size) {
     vector<int> path(size);
     for (int i = 0; i < size; i++) {
@@ -112,6 +118,7 @@ std::vector<int> Algorithms::generateRandomPath(int size) {
     return path;
 }
 
+// Metoda pomocnicza odpowiedzialna za inicjalizacje populacji
 std::vector<std::vector<int>> Algorithms::initializePopulation(int populationSize, int chromosomeSize) {
     vector<vector<int>> population;
     population.reserve(populationSize);
@@ -121,14 +128,16 @@ std::vector<std::vector<int>> Algorithms::initializePopulation(int populationSiz
     return population;
 }
 
+// Metoda pomocnicza odpowiedzialna za selekcje turniejowa
 int Algorithms::tournamentSelection(const vector<vector<int>>& population, const vector<int>& fitness) {
     int size = population.size();
-    int i1 = rand() % size;
-    int i2 = rand() % size;
+    int i = rand() % size;
+    int j = rand() % size;
 
-    return (fitness[i1] < fitness[i2]) ? i1 : i2;
+    return (fitness[i] < fitness[j]) ? i : j;
 }
 
+// Metoda pomocnicza odpowiedzialna za metode krzyzowania pmx
 std::vector<int> Algorithms::pmxCrossover(const std::vector<int>& parent1, const std::vector<int>& parent2) {
     int size = parent1.size();
     std::vector<int> child(size, -1);
@@ -184,6 +193,7 @@ std::vector<int> Algorithms::pmxCrossover(const std::vector<int>& parent1, const
     return child;
 }
 
+// Metoda pomocnicza odpowiedzialna za metode krzyzowania ox
 std::vector<int> Algorithms::oxCrossover(const vector<int>& parent1, const vector<int>& parent2) {
     int size = parent1.size();
     vector<int> child(size, -1);
@@ -218,6 +228,7 @@ std::vector<int> Algorithms::oxCrossover(const vector<int>& parent1, const vecto
     return child;
 }
 
+// Metoda pomocnicza odpowiedzialna za mutacje swap
 void Algorithms::swapMutation(vector<int>& individual) {
     int size = individual.size();
     int i1 = rand() % size;
@@ -225,6 +236,7 @@ void Algorithms::swapMutation(vector<int>& individual) {
     std::swap(individual[i1], individual[i2]);
 }
 
+// Metoda pomocnicza odpowiedzialna za mutacje insert
 void Algorithms::insertionMutation(vector<int>& individual) {
     int size = individual.size();
     int from = rand() % size;
