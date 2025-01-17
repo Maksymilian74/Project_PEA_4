@@ -5,7 +5,6 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include <chrono>
 
 using namespace std;
 using namespace std::chrono;
@@ -46,7 +45,6 @@ void Menu::run() {
     }
 
     Algorithms algorithms;  // Tworzenie obiektu klasy z algorytmami
-
     for (int i = 0; i < iterations; i++) {
 
         // Wyswietlanie macierzy
@@ -63,7 +61,7 @@ void Menu::run() {
             cout  << "Czas znalezienia najlepszego wyniku: " << bestPathTime << " s" << endl;
 
             // Zapis pojedynczych wynikow do pliku CSV
-            saveResultsToCSV("SimulatedAnnealing",matrix->getSize(), minCost, bestPathTime);
+            saveResultsToCSV("GeneticAlgorithm",matrix->getSize(), minCost, bestPathTime);
         }
 
         if (showResults) {
